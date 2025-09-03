@@ -2,10 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import connectTodb from "./db/connectTodb.js";
-
 import path from "path";
+import userRoutes from "./routes/user.routes.js";
 import { fileURLToPath } from "url";
-
+import messageRoutes from "./routes/message.routes.js";
+import cookieParser from "cookie-parser";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,10 +17,12 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 
 // Mount auth routes ONCE
 app.use("/api/auth", authRoutes);
-
+app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes);
 const PORT = process.env.PORT || 5000;
 
 // Test route
