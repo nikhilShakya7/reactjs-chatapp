@@ -17,15 +17,15 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+// Mount auth routes ONCE
+app.use("/api/auth", authRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 // Test route
 app.get("/", (req, res) => {
   res.send("Server is running...");
 });
-
-// Mount auth routes
-app.use("/api/auth", authRoutes);
 
 // Start server and connect to DB
 app.listen(PORT, () => {
