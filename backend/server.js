@@ -1,8 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
+import connectTodb from "./db/connectTodb.js";
 
-dotenv.config();
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
 const app = express();
 
 const PORT = process.env.PORT || 5000;
@@ -16,5 +23,6 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
+    connectTodb();
   console.log(`Server running on port ${PORT}`);
 });
